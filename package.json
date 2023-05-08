@@ -6,13 +6,23 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "build": "expo build:android"
   },
   "dependencies": {
+    "@react-navigation/native": "^6.1.6",
+    "@react-navigation/stack": "^6.3.16",
     "expo": "~48.0.11",
+    "expo-camera": "^13.2.1",
     "expo-status-bar": "~1.4.4",
+    "firebase": "^9.20.0",
     "react": "18.2.0",
-    "react-native": "0.71.6"
+    "react-dom": "^18.2.0",
+    "react-native": "0.71.6",
+    "react-native-torch": "^1.2.0",
+    "react-native-web": "~0.18.11",
+    "expo-sensors": "~12.1.1",
+    "expo-image-picker": "~14.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
