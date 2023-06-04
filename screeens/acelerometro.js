@@ -27,9 +27,9 @@ export default function Acelerometro({ navigation }) {
             <Text style={styles.position}>Y:{y.toFixed(3)}</Text>
             <Text style={styles.position}>Z:{z.toFixed(3)}</Text>
         </View>
-        <TouchableOpacity style={[styles.photoButton, {left: posicion.x, top: posicion.y}]} onPress={() => navigation.navigate('Galeria')}>
+        <TouchableOpacity style={[styles.photoButton, {left: posicion.x, top: posicion.y}]} onPress={() => navigation.navigate('Camara')}>
             <Text style={styles.text}>
-                Ver foto
+                Camara
             </Text>
         </TouchableOpacity>
       </View>

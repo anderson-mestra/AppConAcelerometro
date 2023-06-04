@@ -1,16 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 import {
-  Button,
   Text,
-  TextInput,
   View,
   Image,
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
 import { Camera } from 'expo-camera';
+import * as MediaLibrary from 'expo-media-library';
 
 export default function Camara({ navigation }) {
     const [hasPermission, setHasPermission] = useState(null);
@@ -20,6 +17,7 @@ export default function Camara({ navigation }) {
   
     useEffect(() => {
       (async () => {
+        MediaLibrary.requestPermissionsAsync();
         const { status } = await Camera.requestCameraPermissionsAsync();
         setHasPermission(status === 'granted');
       })();
@@ -37,7 +35,18 @@ export default function Camara({ navigation }) {
         const options = { quality: 0.5, base64: true };
         const photoData = await cameraRef.current.takePictureAsync(options);
         setPhoto(photoData.uri);
+        guardarEnGaleria(photoData.uri);
       }
+    };
+
+    const guardarEnGaleria = async (photoUri) => {
+      const { status } = await MediaLibrary.requestPermissionsAsync();
+      if (status !== 'granted') {
+        console.log('No se pudo obtener los permisisos necesarios');
+        return;
+      }
+      await MediaLibrary.createAssetAsync(photoUri);
+      console.log('Foto guardada');
     };
   
     const [isTorchOn, setIsTorchOn] = useState(false);
@@ -80,7 +89,7 @@ export default function Camara({ navigation }) {
           {photo ? (
             <TouchableOpacity
               style={styles.mostrarFoto}
-              onPress={() => navigation.navigate('Foto', { photo })}>
+              onPress={() => navigation.navigate('Galeria')}>
               <Text style={styles.buttonText}>Ver foto</Text>
             </TouchableOpacity>
           ) : null}

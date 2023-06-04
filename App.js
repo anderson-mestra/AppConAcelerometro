@@ -32,11 +32,11 @@ export default function App() {
           name='Galeria'
           component={Galeria}
         />
-        {/* <Stack.Screen
+        <Stack.Screen
           name="Camara"
           component={Camara}
         />
-        <Stack.Screen
+        {/* <Stack.Screen
           name="Foto"
           component={Foto}
         /> */}

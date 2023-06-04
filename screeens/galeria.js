@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import React, { useState } from "react";
+import * as Sharing from 'expo-sharing';
 
 export default function Galeria() {
   const [imseleccionada, setImagen] = useState(null);
@@ -19,6 +20,17 @@ export default function Galeria() {
     }
     setImagen({ localUri: imagen.uri });
   };
+
+  let compartirImagen = async () => {
+    if (!(await Sharing.isAvailableAsync())) {
+      alert(
+        `The image share is available for sharing at: ${imseleccionada.remoteUri}`
+      );
+      return;
+    }
+
+    await Sharing.shareAsync(imseleccionada.localUri);
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.title}>GALERIA</Text>
@@ -31,9 +43,14 @@ export default function Galeria() {
               : "https://cdn-icons-png.flaticon.com/512/3342/3342176.png",
         }}
       />
-      <TouchableOpacity style={styles.button} onPress={abrirgaleria}>
-        <Text style={styles.textButton}>Abrir imagen de galeria</Text>
-      </TouchableOpacity>
+      <View style={styles.buttonsContainer}>
+        <TouchableOpacity style={styles.button} onPress={abrirgaleria}>
+          <Text style={styles.textButton}>Galeria</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={compartirImagen}>
+            <Text style={styles.textButton}>Compartir</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -54,11 +71,16 @@ const styles = StyleSheet.create({
     height: 300,
     marginBottom: 40
   },
+  buttonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
   button: {
     backgroundColor: '#0b090a',
     height: 50,
-    width: 200,
+    width: 150,
     paddingVertical: 10,
+    marginHorizontal: 10,
     borderRadius: 50,
     alignItems: 'center',
     justifyContent: 'center'
